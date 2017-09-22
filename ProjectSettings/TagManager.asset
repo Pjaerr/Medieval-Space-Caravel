@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Level
+  - left_boundary
+  - right_boundary
+  - top_boundary
+  - bottom_boundary
   layers:
   - Default
   - TransparentFX
