@@ -2676,6 +2676,8 @@ GameObject:
   m_Component:
   - component: {fileID: 186127009}
   - component: {fileID: 186127008}
+  - component: {fileID: 186127011}
+  - component: {fileID: 186127010}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2707,6 +2709,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &186127010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 186127007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c971e3a58182146b6bbf75f88985bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &186127011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 186127007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b69fe4b34762e84eac9cc864e51317a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfLives: {fileID: 1984253451}
 --- !u!1001 &188678202
 Prefab:
   m_ObjectHideFlags: 0
@@ -5710,6 +5735,7 @@ RectTransform:
   m_Children:
   - {fileID: 15481888}
   - {fileID: 359978815}
+  - {fileID: 1984253450}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16041,11 +16067,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4200635086560720, guid: e0768f7138723cc45910acddeea20760, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -6.62
       objectReference: {fileID: 0}
     - target: {fileID: 4200635086560720, guid: e0768f7138723cc45910acddeea20760, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -11.06
       objectReference: {fileID: 0}
     - target: {fileID: 4200635086560720, guid: e0768f7138723cc45910acddeea20760, type: 2}
       propertyPath: m_LocalPosition.z
@@ -29117,6 +29143,80 @@ Transform:
   m_PrefabParentObject: {fileID: 4811322949073950, guid: f57b5ad3d8cd69d4788198ca869c5ee5,
     type: 2}
   m_PrefabInternal: {fileID: 1982448034}
+--- !u!1 &1984253449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1984253450}
+  - component: {fileID: 1984253452}
+  - component: {fileID: 1984253451}
+  m_Layer: 5
+  m_Name: UI_numOfLives
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1984253450
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1984253449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 360625674}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -25}
+  m_SizeDelta: {x: 91.71, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1984253451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1984253449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 3007d1dc01fe62446b12b070170590d4, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Lives: 5'
+--- !u!222 &1984253452
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1984253449}
 --- !u!1001 &1984766840
 Prefab:
   m_ObjectHideFlags: 0
