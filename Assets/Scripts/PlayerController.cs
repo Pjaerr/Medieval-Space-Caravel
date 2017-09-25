@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
             y -= movementSpeed;
         }
 
-        trans.Translate(new Vector2(0, y));
+        trans.Translate(new Vector2(0, y * Time.deltaTime));
     }
 
 

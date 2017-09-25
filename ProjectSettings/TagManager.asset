@@ -9,6 +9,9 @@ TagManager:
   - right_boundary
   - top_boundary
   - bottom_boundary
+  - Enemy
+  - Player_Projectile
+  - Enemy_Projectile
   layers:
   - Default
   - TransparentFX
