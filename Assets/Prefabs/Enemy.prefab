@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  movementSpeed: 1
-  rotationSpeed: 1
+  movementSpeed: 3
+  rotationSpeed: 3
   damage: 1
   lives: 5
 --- !u!212 &212704144439343524

@@ -66,4 +66,13 @@ public class EnemyController : MonoBehaviour
 		float step = movementSpeed * Time.deltaTime;
 		trans.position = Vector3.MoveTowards(trans.position, playerTransform.position, step);
 	}
+
+	void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            playerController.deductLives(damage);
+        }
+    }
+
 }

@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     
     public int damage = 2;
 
+    private bool isInvincible = false;
+
     void Start()
     {
         trans = GetComponent<Transform>();
@@ -66,17 +68,31 @@ public class PlayerController : MonoBehaviour
     each script that needs to call it.*/
     public void deductLives(int numOfLives)
     {
+        if (isInvincible)
+        {
+            return;
+        }
+
         lives -= numOfLives;
+        StartCoroutine(invincibility());
 
         if (lives <= 0)
         {
             isDead();
         }
+
+        gUI.updateNumberOfLives(lives);
+    }
+
+    IEnumerator invincibility()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(3);
+        isInvincible = false;
     }
 
     void isDead()
     {
         //Do something on death here.
     }
-
 }
