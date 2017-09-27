@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
 
     private UI gUI;
 
+    [SerializeField] private GameObject projectile;
+
+    [SerializeField] private Transform projectileLaunchPoint;
+
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private float rotationSpeed = 2;
 
@@ -33,6 +37,11 @@ public class PlayerController : MonoBehaviour
     then translate this object by the new y value.*/
     void ProtoMovement()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ProtoAttack();
+        }
+
         ProtoTurning();
 
         float y = 0;
@@ -62,6 +71,11 @@ public class PlayerController : MonoBehaviour
         {
             trans.Rotate(new Vector3(0, 0, rotationSpeed));
         }
+    }
+
+    void ProtoAttack()
+    {
+        Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
     }
 
     /*This function should be called from elsewhere, when calling it, access it via the Player object in the scene on

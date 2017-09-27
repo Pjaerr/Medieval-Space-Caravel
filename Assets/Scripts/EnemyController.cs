@@ -52,8 +52,17 @@ public class EnemyController : MonoBehaviour
 	void takeDamage()
 	{
 		lives -= playerController.damage;
+		isDead();
 	}
 
+	void isDead()
+	{
+		if (lives <= 0)
+		{
+			Destroy(gameObject);
+			//Carry out some form of object pooling here when dealing with the real game.
+		}
+	}
 
 	void followPlayer()
 	{
@@ -73,6 +82,11 @@ public class EnemyController : MonoBehaviour
         {
             playerController.deductLives(damage);
         }
+		
+		if (col.gameObject.tag == "Player_Projectile")
+		{
+			takeDamage();
+		}
     }
 
 }
