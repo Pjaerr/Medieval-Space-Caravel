@@ -6,7 +6,8 @@ public class EnemyController : MonoBehaviour
 {
 	enum Type {Melee, Ranged};
 
-	[SerializeField] private Type enemyType = Type.Melee;
+	[SerializeField] private Type enemyType = Type.Ranged;
+	[SerializeField] private Vector3[] patrolPoints = new Vector3[2];
 
 	private Transform trans;
 
@@ -39,6 +40,10 @@ public class EnemyController : MonoBehaviour
 		if (enemyType == Type.Melee)
 		{
 			followPlayer();
+		}
+		else
+		{
+			patrolArea();
 		}
 	}
 
@@ -74,6 +79,35 @@ public class EnemyController : MonoBehaviour
 		//Move towards the player at the given movementSpeed.
 		float step = movementSpeed * Time.deltaTime;
 		trans.position = Vector3.MoveTowards(trans.position, playerTransform.position, step);
+	}
+
+
+	void patrolArea()
+	{
+		if (canSeePlayer())
+		{
+			//Rotate and Shoot at player
+		}
+		else
+		{
+			float step = movementSpeed * Time.deltaTime;
+
+			if (trans.position == patrolPoints[0])
+			{
+				Vector3.MoveTowards(trans.position, patrolPoints[1], step);
+			}
+			else
+			{
+				Vector3.MoveTowards(trans.position, patrolPoints[0], step);
+			}
+				
+		}
+		
+	}
+
+	bool canSeePlayer()
+	{
+		return false;
 	}
 
 	void OnCollisionEnter2D(Collision2D col)
