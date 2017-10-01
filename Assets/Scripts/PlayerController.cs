@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void ProtoAttack()
     {
+        
         Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
     }
 
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         if (lives <= 0)
         {
-            isDead();
+            //isDead();
         }
 
         gUI.updateNumberOfLives(lives);
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
 
     void isDead()
     {
-        //Do something on death here.
+        Time.timeScale = 0;
+        gUI.youLoseScreen.SetActive(true);
     }
 }

@@ -6,8 +6,7 @@ public class EnemyController : MonoBehaviour
 {
 	enum Type {Melee, Ranged};
 
-	[SerializeField] private Type enemyType = Type.Ranged;
-	[SerializeField] private Vector3[] patrolPoints = new Vector3[2];
+	[SerializeField] private Type enemyType = Type.Melee;
 
 	private Transform trans;
 
@@ -16,10 +15,20 @@ public class EnemyController : MonoBehaviour
 	private PlayerController playerController;
 	private Transform playerTransform;
 
+	[SerializeField] private GameObject projectile;
+	[SerializeField] private Transform projectileLaunchPoint;
+
+
 	[SerializeField] private float movementSpeed = 0.1f;
 	[SerializeField] private float rotationSpeed = 1;
+
+	[Range(0.0f, 100.0f)]
+	[SerializeField] private float range = 20.0f;
 	[SerializeField] private int damage = 1;
 	[SerializeField] private int lives = 5;
+
+	private bool cooldownHasEnded = true;
+	[SerializeField] private float cooldownTime = 2f;
 
 	void Start()
 	{
@@ -33,6 +42,13 @@ public class EnemyController : MonoBehaviour
 		playerObject = GameObject.FindWithTag("Player");
 		playerController = playerObject.GetComponent<PlayerController>();
 		playerTransform = playerObject.GetComponent<Transform>();
+
+
+		//Randomly assign values.
+		enemyType = (Type)Random.Range(0, 2);
+		movementSpeed = Random.Range(0.5f, 3.0f);
+		cooldownTime = Random.Range(0.5f, 4.0f);
+		range = Random.Range(5.0f, 60.0f);
 	}
 
 	void Update()
@@ -41,9 +57,9 @@ public class EnemyController : MonoBehaviour
 		{
 			followPlayer();
 		}
-		else
+		else if (enemyType == Type.Ranged)
 		{
-			patrolArea();
+			randomlyPatrol();
 		}
 	}
 
@@ -64,50 +80,79 @@ public class EnemyController : MonoBehaviour
 	{
 		if (lives <= 0)
 		{
+			GameManager.singleton.numberOfEnemies--;
 			Destroy(gameObject);
-			//Carry out some form of object pooling here when dealing with the real game.
 		}
 	}
 
 	void followPlayer()
 	{
 		//Rotate to look at the player.
-		float angle = Mathf.Atan2(playerTransform.position.y - trans.position.y, 
-		playerTransform.position.x - trans.position.x) * Mathf.Rad2Deg;
-		trans.rotation = Quaternion.AngleAxis(angle + 90, new Vector3(0, 0, rotationSpeed));
+		GameManager.singleton.LookAtPosition(trans, playerTransform.position, rotationSpeed);
 
 		//Move towards the player at the given movementSpeed.
 		float step = movementSpeed * Time.deltaTime;
 		trans.position = Vector3.MoveTowards(trans.position, playerTransform.position, step);
 	}
 
+	private bool currentlyPatrolling = false;
+	private Vector3 patrolPoint = new Vector3(0, 0, 10);
 
-	void patrolArea()
+	void randomlyPatrol()
 	{
+		float step = movementSpeed * Time.deltaTime;
+
+		if (!currentlyPatrolling)
+		{
+			currentlyPatrolling = true;
+			patrolPoint = new Vector3(Random.Range(-21, 13), Random.Range(13, -13), 10);
+		}
+
 		if (canSeePlayer())
 		{
-			//Rotate and Shoot at player
+			GameManager.singleton.LookAtPosition(trans, playerTransform.position, rotationSpeed);
+			if (cooldownHasEnded)
+			{
+				StartCoroutine(shootAtPlayer());
+			}
+		}
+	
+
+		if (trans.position != patrolPoint)
+		{
+			GameManager.singleton.LookAtPosition(trans, patrolPoint, rotationSpeed);
+			trans.position = Vector3.MoveTowards(trans.position, patrolPoint, step);
 		}
 		else
 		{
-			float step = movementSpeed * Time.deltaTime;
-
-			if (trans.position == patrolPoints[0])
-			{
-				Vector3.MoveTowards(trans.position, patrolPoints[1], step);
-			}
-			else
-			{
-				Vector3.MoveTowards(trans.position, patrolPoints[0], step);
-			}
-				
+			currentlyPatrolling = false;
 		}
 		
+
 	}
 
 	bool canSeePlayer()
 	{
+		Vector3 offset = playerTransform.position - trans.position;
+		float distance = offset.sqrMagnitude * 0.1f; 
+
+		if (distance < range)
+		{
+			Debug.DrawLine(trans.position, playerTransform.position, Color.red);
+			return true;
+		}
+		
 		return false;
+	}
+
+	/*Gets called via a Coroutine, will fire a projectile and then wait the cooldowntime in seconds before setting
+	cooldownHasEnded to true. This is checked for in randomlyPatrol() before allowing another call of this via a coroutine.*/
+	IEnumerator shootAtPlayer()
+	{
+		cooldownHasEnded = false;
+		Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
+		yield return new WaitForSeconds(cooldownTime);
+		cooldownHasEnded = true;
 	}
 
 	void OnCollisionEnter2D(Collision2D col)
@@ -124,3 +169,5 @@ public class EnemyController : MonoBehaviour
     }
 
 }
+
+

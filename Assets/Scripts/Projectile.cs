@@ -21,7 +21,15 @@ public class Projectile : MonoBehaviour
 	}
 	void launchProjectile()
 	{
-		trans.Translate(new Vector3(-force, 0, 0) * Time.deltaTime);
+		if (gameObject.tag == "Enemy_Projectile")
+		{
+			trans.Translate(new Vector3(0, -force, 0) * Time.deltaTime);
+		}
+		else
+		{
+			trans.Translate(new Vector3(-force, 0, 0) * Time.deltaTime);
+		}
+		
 	}
 	void killProjectile()
 	{
@@ -31,7 +39,7 @@ public class Projectile : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "Player_Projectile")
+		if (col.gameObject.tag == "Player_Projectile" || col.gameObject.tag == "Enemy_Projectile")
 		{
 			return;
 		}
