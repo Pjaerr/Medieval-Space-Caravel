@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fa8d1360391af564ba3be7c6c9221603
-timeCreated: 1506350089
+guid: ec5d9f01e4e4aff48828fa5211b5070e
+timeCreated: 1506948093
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -103,12 +103,12 @@ TextureImporter:
       name: temp_ship_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 2
         y: 2
-        width: 8
+        width: 9
         height: 12
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private Transform projectileLaunchPoint;
+    [SerializeField] private Transform[] projectileLaunchPoints = new Transform[2];
 
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private float rotationSpeed = 2;
@@ -37,10 +37,7 @@ public class PlayerController : MonoBehaviour
     then translate this object by the new y value.*/
     void ProtoMovement()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ProtoAttack();
-        }
+        ProtoAttack();
 
         ProtoTurning();
 
@@ -75,8 +72,19 @@ public class PlayerController : MonoBehaviour
 
     void ProtoAttack()
     {
-        
-        Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            spawnProjectile(projectileLaunchPoints[0].position, projectileLaunchPoints[0].rotation);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            spawnProjectile(projectileLaunchPoints[1].position, projectileLaunchPoints[1].rotation);
+        }
+    }
+
+    void spawnProjectile(Vector3 pos, Quaternion rotation)
+    {
+        Instantiate(projectile, pos, rotation);
     }
 
     /*This function should be called from elsewhere, when calling it, access it via the Player object in the scene on
