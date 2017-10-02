@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
     private bool isInvincible = false;
 
+    private bool cooldownHasEnded = true;
+	[SerializeField] private float cooldownTime = 1.0f;
+
     void Start()
     {
         trans = GetComponent<Transform>();
@@ -72,15 +75,26 @@ public class PlayerController : MonoBehaviour
 
     void ProtoAttack()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (cooldownHasEnded)
         {
-            spawnProjectile(projectileLaunchPoints[0].position, projectileLaunchPoints[0].rotation);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            spawnProjectile(projectileLaunchPoints[1].position, projectileLaunchPoints[1].rotation);
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                StartCoroutine(fireProjectile(projectileLaunchPoints[0]));
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                StartCoroutine(fireProjectile(projectileLaunchPoints[1]));
+            }
         }
     }
+
+    IEnumerator fireProjectile(Transform launchPoint)
+	{
+		cooldownHasEnded = false;
+		spawnProjectile(launchPoint.position, launchPoint.rotation);
+		yield return new WaitForSeconds(cooldownTime);
+		cooldownHasEnded = true;
+	}
 
     void spawnProjectile(Vector3 pos, Quaternion rotation)
     {
@@ -101,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
         if (lives <= 0)
         {
-            //isDead();
+            isDead();
         }
 
         gUI.updateNumberOfLives(lives);

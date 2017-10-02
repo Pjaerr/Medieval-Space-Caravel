@@ -42,13 +42,27 @@ public class GameManager : MonoBehaviour
 		{
 			if (numberOfEnemies <= 0)
 			{
-				StartCoroutine(newWave());
+				StartCoroutine(newWave()); //Starts a new wave.
 			}
 		}
 	}
 
+	//Ends the game, showing relevant game screen whether the player has won or not.
+	void endGame(bool playerHasWon)
+	{
+		gUI.youWinScreen.SetActive(true);
+		Time.timeScale = 0.3f;
+	}
+
+	/*Starts a new wave, meant to be called via a coroutine. Will increase the wave count, and make the next set of enemies
+	equal to the wave number multiplied by 2. Will wait 3 seconds and then spawn said enemies.*/
 	IEnumerator newWave()
 	{
+		if (wave >= 15)
+		{
+			endGame(true);
+		}
+
 		wave++;
 		numberOfEnemies = wave * 2;
 		gUI.updateNumberOfWaves(wave);
@@ -56,6 +70,7 @@ public class GameManager : MonoBehaviour
 		spawnEnemies(numberOfEnemies);
 	}
 
+	/*Spawns enemies randomly between minmaxX and Y positions respectivley.*/
 	void spawnEnemies(int numberOfEnemies)
 	{
 		for (int i = 0; i < numberOfEnemies; i++)
@@ -64,6 +79,8 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	/*Will rotate object 'thisTransform' by degrees pointing in the direction of object 'targetPos' from position of 'thisTransform'
+	utilises Mathf.Atan2.*/
 	public void LookAtPosition(Transform thisTransform, Vector3 targetPos, float rotationSpeed)
 	{
 		float angle = Mathf.Atan2(targetPos.y - thisTransform.position.y, 
