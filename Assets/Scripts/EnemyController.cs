@@ -150,7 +150,8 @@ public class EnemyController : MonoBehaviour
 	IEnumerator shootAtPlayer()
 	{
 		cooldownHasEnded = false;
-		Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
+		GameObject go = (GameObject)Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
+		go.GetComponent<Projectile>().dmg = damage;
 		yield return new WaitForSeconds(cooldownTime);
 		cooldownHasEnded = true;
 	}

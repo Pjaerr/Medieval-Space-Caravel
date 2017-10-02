@@ -130,7 +130,6 @@ public class PlayerController : MonoBehaviour
 
     void isDead()
     {
-        Time.timeScale = 0;
-        gUI.youLoseScreen.SetActive(true);
+        GameManager.singleton.endGame(false);
     }
 }

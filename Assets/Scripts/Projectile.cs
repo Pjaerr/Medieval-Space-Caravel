@@ -9,11 +9,12 @@ public class Projectile : MonoBehaviour
 	private float lifeSpan = 3;
 	private float force = 5;
 
+	[HideInInspector] public int dmg;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		trans = GetComponent<Transform>();
-        
 	}
 
 	void Update()
@@ -43,6 +44,11 @@ public class Projectile : MonoBehaviour
 		if (col.gameObject.tag == "Player_Projectile" || col.gameObject.tag == "Enemy_Projectile")
 		{
 			return;
+		}
+
+		if (col.gameObject.tag == "Player")
+		{
+			col.gameObject.GetComponent<PlayerController>().deductLives(dmg);
 		}
 
 		killProjectile();

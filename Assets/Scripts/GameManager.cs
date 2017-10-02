@@ -48,9 +48,19 @@ public class GameManager : MonoBehaviour
 	}
 
 	//Ends the game, showing relevant game screen whether the player has won or not.
-	void endGame(bool playerHasWon)
+	public void endGame(bool playerHasWon)
 	{
-		gUI.youWinScreen.SetActive(true);
+		gUI.generalUI.SetActive(false);
+
+		if (playerHasWon)
+		{
+			gUI.youWinScreen.SetActive(true);
+		}
+		else
+		{
+			gUI.youLoseScreen.SetActive(true);
+		}
+
 		Time.timeScale = 0.3f;
 	}
 

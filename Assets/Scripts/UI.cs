@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
 
 	public GameObject youWinScreen;
 	public GameObject youLoseScreen;
+	public GameObject generalUI;
 
 	public void updateNumberOfLives(int newNum)
 	{
