@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Transform trans;
 
+    private SpriteRenderer spriteRenderer;
+
     private UI gUI;
 
     [SerializeField] private GameObject projectile;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         trans = GetComponent<Transform>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         gUI = GameManager.singleton.GetComponent<UI>();
         gUI.updateNumberOfLives(lives);
     }
@@ -123,9 +126,17 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator invincibility()
     {
+        StartCoroutine(flashSprite());
         isInvincible = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         isInvincible = false;
+    }
+
+    IEnumerator flashSprite()
+    {
+        spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.enabled = true;
     }
 
     void isDead()

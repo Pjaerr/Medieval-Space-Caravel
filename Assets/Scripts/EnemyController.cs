@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
 
 	private Transform trans;
 
+	private SpriteRenderer spriteRenderer;
+
 	//Player References
 	private GameObject playerObject;
 	private PlayerController playerController;
@@ -37,6 +39,7 @@ public class EnemyController : MonoBehaviour
 		lives = GameManager.singleton.wave;
 
 		trans = GetComponent<Transform>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 
 		//Load the player references once when the object starts.
 		playerObject = GameObject.FindWithTag("Player");
@@ -72,9 +75,16 @@ public class EnemyController : MonoBehaviour
 	//Call this function when a collision happens between this object and a player projectile.
 	void takeDamage()
 	{
+		StartCoroutine(flashSprite());
 		lives -= playerController.damage;
 		isDead();
 	}
+	IEnumerator flashSprite()
+    {
+        spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.enabled = true;
+    }
 
 	void isDead()
 	{
