@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator fireProjectile(Transform launchPoint)
 	{
+        GameManager.singleton.fireSound.Play();
 		cooldownHasEnded = false;
 		spawnProjectile(launchPoint.position, launchPoint.rotation);
 		yield return new WaitForSeconds(cooldownTime);

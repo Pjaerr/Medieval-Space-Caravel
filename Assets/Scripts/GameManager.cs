@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
 	private UI gUI;
 
+	public AudioSource fireSound;
+
 	[Header("Min and Max Position for both X and Y respectively on which to spawn enemies at random.")]
 	[SerializeField] private float[] minMaxX = new float[] {-20, 15};
 	[SerializeField] private float[] minMaxY = new float[] {15, 9};

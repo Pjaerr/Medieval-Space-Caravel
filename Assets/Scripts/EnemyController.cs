@@ -34,8 +34,7 @@ public class EnemyController : MonoBehaviour
 
 	void Start()
 	{
-		//Assign the damage and lives of this enemy to the current wave number to provide level of abritry difficulty.
-		damage = GameManager.singleton.wave;
+		//Assign the lives of this enemy to the current wave number to provide level of abritry difficulty.
 		lives = GameManager.singleton.wave;
 
 		trans = GetComponent<Transform>();
@@ -159,6 +158,7 @@ public class EnemyController : MonoBehaviour
 	cooldownHasEnded to true. This is checked for in randomlyPatrol() before allowing another call of this via a coroutine.*/
 	IEnumerator shootAtPlayer()
 	{
+		GameManager.singleton.fireSound.Play();
 		cooldownHasEnded = false;
 		GameObject go = (GameObject)Instantiate(projectile, projectileLaunchPoint.position, trans.rotation);
 		go.GetComponent<Projectile>().dmg = damage;
