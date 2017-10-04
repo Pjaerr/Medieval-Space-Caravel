@@ -53,10 +53,6 @@ public class PlayerController : MonoBehaviour
         {
             y += movementSpeed;
         }
-        else if (Input.GetAxisRaw("Vertical") == -1)
-        {
-            y -= movementSpeed;
-        }
 
         trans.Translate(new Vector2(0, y * Time.deltaTime));
     }

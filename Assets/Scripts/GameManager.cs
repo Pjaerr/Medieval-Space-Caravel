@@ -9,11 +9,15 @@ public class GameManager : MonoBehaviour
 	public AudioSource fireSound;
 
 	[Header("Min and Max Position for both X and Y respectively on which to spawn enemies at random.")]
-	[SerializeField] private float[] minMaxX = new float[] {-20, 15};
-	[SerializeField] private float[] minMaxY = new float[] {15, 9};
+	[HideInInspector] public float[] minMaxX = new float[2];
+	[HideInInspector] public float[] minMaxY = new float[2];
+
+	private LevelGeneration levelGen;
 
 	[HideInInspector] public int numberOfEnemies = 2;
 	[SerializeField] private GameObject enemyPrefab;
+
+	[SerializeField] private Transform[] spawnPoints;
 	[HideInInspector] public int wave = 1;
 
 	public static GameManager singleton = null;
@@ -34,7 +38,10 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		levelGen = GetComponent<LevelGeneration>();
 		gUI = GetComponent<UI>();
+		minMaxX = levelGen.minMaxX;
+		minMaxY = levelGen.minMaxY;
 		spawnEnemies(numberOfEnemies);
 	}
 
@@ -87,7 +94,7 @@ public class GameManager : MonoBehaviour
 	{
 		for (int i = 0; i < numberOfEnemies; i++)
 		{
-			Instantiate(enemyPrefab, new Vector2(Random.Range(minMaxX[0], minMaxX[1]), Random.Range(minMaxY[0], minMaxY[1])), Quaternion.identity);
+			Instantiate(enemyPrefab, spawnPoints[Random.Range(0, (spawnPoints.Length - 1))].position, Quaternion.identity);
 		}
 	}
 
@@ -98,6 +105,11 @@ public class GameManager : MonoBehaviour
 		float angle = Mathf.Atan2(targetPos.y - thisTransform.position.y, 
 		targetPos.x - thisTransform.position.x) * Mathf.Rad2Deg;
 		thisTransform.rotation = Quaternion.AngleAxis(angle + 90, new Vector3(0, 0, rotationSpeed));
+	}
+
+	public void quitGame()
+	{
+		Debug.Log("Quitting Game..");
 	}
 	
 }

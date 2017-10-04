@@ -32,6 +32,12 @@ public class EnemyController : MonoBehaviour
 	private bool cooldownHasEnded = true;
 	[SerializeField] private float cooldownTime = 2f;
 
+	private float[] minMaxX = new float[2];
+	private float[] minMaxY = new float[2];
+
+	private bool isCollidingWithWall = false;
+	private Vector3 positionToFollow;
+
 	void Start()
 	{
 		//Assign the lives of this enemy to the current wave number to provide level of abritry difficulty.
@@ -45,6 +51,11 @@ public class EnemyController : MonoBehaviour
 		playerController = playerObject.GetComponent<PlayerController>();
 		playerTransform = playerObject.GetComponent<Transform>();
 
+		positionToFollow = playerTransform.position;
+
+		//Store minmax locally.
+		minMaxX = GameManager.singleton.minMaxX;
+		minMaxY = GameManager.singleton.minMaxY;
 
 		//Randomly assign values.
 		enemyType = (Type)Random.Range(0, 2);
@@ -57,6 +68,12 @@ public class EnemyController : MonoBehaviour
 	{
 		if (enemyType == Type.Melee)
 		{
+			if (!isCollidingWithWall)
+			{
+				positionToFollow = playerTransform.position;
+			}
+			
+
 			followPlayer();
 		}
 		else if (enemyType == Type.Ranged)
@@ -97,11 +114,11 @@ public class EnemyController : MonoBehaviour
 	void followPlayer()
 	{
 		//Rotate to look at the player.
-		GameManager.singleton.LookAtPosition(trans, playerTransform.position, rotationSpeed);
+		GameManager.singleton.LookAtPosition(trans, positionToFollow, rotationSpeed);
 
 		//Move towards the player at the given movementSpeed.
 		float step = movementSpeed * Time.deltaTime;
-		trans.position = Vector3.MoveTowards(trans.position, playerTransform.position, step);
+		trans.position = Vector3.MoveTowards(trans.position, positionToFollow, step);
 	}
 
 	private bool currentlyPatrolling = false;
@@ -114,7 +131,7 @@ public class EnemyController : MonoBehaviour
 		if (!currentlyPatrolling)
 		{
 			currentlyPatrolling = true;
-			patrolPoint = new Vector3(Random.Range(-21, 13), Random.Range(13, -13), 10);
+			patrolPoint = new Vector3(Random.Range(minMaxX[0], minMaxX[1]) - 2, Random.Range(minMaxY[0], minMaxY[1]) - 2, 10);
 		}
 
 		if (canSeePlayer())
@@ -177,8 +194,12 @@ public class EnemyController : MonoBehaviour
 		{
 			takeDamage();
 		}
-    }
 
+		if (col.gameObject.tag == "Wall" && enemyType == Type.Ranged)
+		{
+			patrolPoint = new Vector3(Random.Range(minMaxX[0], minMaxX[1]) - 2, Random.Range(minMaxY[0], minMaxY[1]) - 2, 10);
+		}
+    }
 }
 
 
