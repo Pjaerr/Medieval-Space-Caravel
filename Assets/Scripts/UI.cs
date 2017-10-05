@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour 
 {
@@ -19,5 +20,15 @@ public class UI : MonoBehaviour
 	public void updateNumberOfWaves(int newNum)
 	{
 		numberOfWaves.text = "Wave: " + newNum.ToString();
+	}
+
+	public void quitGame()
+	{
+		Debug.Log("Quitting Game..");
+	}
+
+	public void loadScene(int index)
+	{
+		SceneManager.LoadScene(index);
 	}
 }

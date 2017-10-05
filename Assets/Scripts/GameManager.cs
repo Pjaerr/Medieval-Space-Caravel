@@ -32,12 +32,11 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(gameObject);	//Destroy this.
 		}
-
-		DontDestroyOnLoad(gameObject);
 	}
 
 	void Start()
 	{
+		Time.timeScale = 1;
 		levelGen = GetComponent<LevelGeneration>();
 		gUI = GetComponent<UI>();
 		minMaxX = levelGen.minMaxX;
@@ -105,11 +104,6 @@ public class GameManager : MonoBehaviour
 		float angle = Mathf.Atan2(targetPos.y - thisTransform.position.y, 
 		targetPos.x - thisTransform.position.x) * Mathf.Rad2Deg;
 		thisTransform.rotation = Quaternion.AngleAxis(angle + 90, new Vector3(0, 0, rotationSpeed));
-	}
-
-	public void quitGame()
-	{
-		Debug.Log("Quitting Game..");
 	}
 	
 }

@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 92060299635556970}
   - component: {fileID: 124934865756535330}
   - component: {fileID: 81400377336480676}
+  - component: {fileID: 114465021492761236}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -99,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358144603357434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.78, y: -12.34, z: 10}
+  m_LocalPosition: {x: -2.1, y: -31.7, z: 10}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 4354765778870310}
@@ -142,8 +143,8 @@ Camera:
   m_GameObject: {fileID: 1681128401844962}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.7137255, g: 0.6862745, b: 0.6156863, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.25882354, g: 0.4901961, b: 0.8705883, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -154,7 +155,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -207,7 +208,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 10, y: 12}
-    newSize: {x: 9, y: 12}
+    newSize: {x: 10, y: 12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -248,6 +249,19 @@ MonoBehaviour:
   rotationSpeed: 2
   damage: 2
   cooldownTime: 1
+--- !u!114 &114465021492761236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1681128401844962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aab717fce810a34285d9287ef11be06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orthographicSize: 10
+  aspect: 1.7777
 --- !u!124 &124934865756535330
 Behaviour:
   m_ObjectHideFlags: 1
@@ -287,12 +301,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: ec5d9f01e4e4aff48828fa5211b5070e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d0eafae589708e14f8acc7c2349e189f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9, y: 12}
+  m_Size: {x: 10, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
