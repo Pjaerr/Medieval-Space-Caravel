@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour 
 {
+	//Local References
 	enum Type {Melee, Ranged};
-
-	[SerializeField] private Type enemyType = Type.Melee;
-
 	private Transform trans;
-
 	private SpriteRenderer spriteRenderer;
+	private float[] minMaxX = new float[2];
+	private float[] minMaxY = new float[2];
 
-	//Player References
+	private Vector3 positionToFollow;
+
+	//References to the Player
 	private GameObject playerObject;
 	private PlayerController playerController;
 	private Transform playerTransform;
 
+	//References to objects
 	[SerializeField] private GameObject projectile;
 	[SerializeField] private Transform projectileLaunchPoint;
 
-
+	[Header("Enemy Attributes")]
+	//Enemy Attributes
+	[SerializeField] private Type enemyType = Type.Melee;
 	[SerializeField] private float movementSpeed = 0.1f;
 	[SerializeField] private float rotationSpeed = 1;
 
@@ -28,15 +32,11 @@ public class EnemyController : MonoBehaviour
 	[SerializeField] private float range = 20.0f;
 	[SerializeField] private int damage = 1;
 	[SerializeField] private int lives = 5;
-
-	private bool cooldownHasEnded = true;
 	[SerializeField] private float cooldownTime = 2f;
 
-	private float[] minMaxX = new float[2];
-	private float[] minMaxY = new float[2];
-
+	//Checks
+	private bool cooldownHasEnded = true;
 	private bool isCollidingWithWall = false;
-	private Vector3 positionToFollow;
 
 	void Start()
 	{

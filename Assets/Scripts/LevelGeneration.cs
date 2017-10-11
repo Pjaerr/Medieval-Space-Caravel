@@ -11,16 +11,20 @@ public class LevelGeneration : MonoBehaviour
     [HideInInspector] public float[] minMaxX = new float[2]; 
     [HideInInspector] public float[] minMaxY = new float[2]; 
 
-    [Header("Left, Right, Up, Down Respectively")]
+    [Header("Left, Top, Right, Bottom Respectively")]
     [SerializeField] private Transform[] levelBoundaries = new Transform[4];
+
+    [SerializeField] private Transform[] spawnPoints = new Transform[5];
 
 
     void Start()
     {
+        randomlyGenerateBoundaries();
         setMinMax();
         loadWaterTiles();
+        setSpawnPoints();
+        
     }   
-
 
     void loadWaterTiles()
     {
@@ -41,14 +45,36 @@ public class LevelGeneration : MonoBehaviour
 
     void setMinMax()
     {
-        for (int i = 0; i < minMaxX.Length; i++)
-        {
-            minMaxX[i] = levelBoundaries[i].position.x;
-        }
-        for (int i = 0; i < minMaxY.Length; i++)
-        {
-            minMaxY[i] = levelBoundaries[i + 2].position.y;
-        }
+        minMaxX[0] = levelBoundaries[0].position.x;
+        minMaxX[1] = levelBoundaries[2].position.x;
+        minMaxY[0] = levelBoundaries[1].position.y;
+        minMaxY[1] = levelBoundaries[3].position.y;
     }
 
+    void randomlyGenerateBoundaries()
+    {
+        //Position and scale left boundary
+        levelBoundaries[0].position = new Vector3(Random.Range(-10, 80), 0, 10);
+        levelBoundaries[0].localScale = new Vector3(1, Random.Range(90, 30), 0);
+
+        //Position and scale of top boundary.
+        levelBoundaries[1].localScale = new Vector3(Random.Range(80, 200), 1, 0);
+        levelBoundaries[1].position = new Vector3(levelBoundaries[0].position.x + (levelBoundaries[1].localScale.x / 2), levelBoundaries[0].localScale.y / 2, 10);
+
+        //Position and scale of right boundary
+        levelBoundaries[2].position = new Vector3(levelBoundaries[1].localScale.x + levelBoundaries[0].position.x, 0, 10);
+        levelBoundaries[2].localScale = levelBoundaries[0].localScale;
+
+        //Position and scale of bottom boundary
+        levelBoundaries[3].position = new Vector3(levelBoundaries[1].position.x, -(levelBoundaries[0].localScale.y / 2), 10);
+        levelBoundaries[3].localScale = levelBoundaries[1].localScale;
+    }
+
+    void setSpawnPoints()
+    {
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            spawnPoints[i].position = new Vector3(Random.Range(levelBoundaries[0].position.x, levelBoundaries[2].position.x),Random.Range(levelBoundaries[1].position.y, levelBoundaries[3].position.y), 10);
+        }
+    }
 }

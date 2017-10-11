@@ -4,34 +4,45 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //Local References
     private Transform trans;
-
     private SpriteRenderer spriteRenderer;
-
     private UI gUI;
 
+    //References to objects.
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private Transform[] projectileLaunchPoints = new Transform[2];
+    [Header("GameObjects holding left and right launch points respectively")]  
+     [SerializeField] private Transform[] launchPointObjects = new Transform[2];
 
+     [SerializeField] private int numberOfCanonSlots = 1;
+    private Transform[,] projectileLaunchPoints; //[left and right][number of spots for canons]
+
+
+    [Header("Player Attributes")]
+    //Player Attributes
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private float rotationSpeed = 2;
-
-    private int lives = 5;
-    
+    [SerializeField] private int lives = 5;
     public int damage = 2;
-
+    [SerializeField] private float cooldownTime = 1.0f;
+    
+    //Checks
     private bool isInvincible = false;
-
     private bool cooldownHasEnded = true;
-	[SerializeField] private float cooldownTime = 1.0f;
 
     void Start()
     {
+        projectileLaunchPoints = new Transform[2, numberOfCanonSlots];
         trans = GetComponent<Transform>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         gUI = GameManager.singleton.GetComponent<UI>();
         gUI.updateNumberOfLives(lives);
+        for (int i = 0; i < launchPointObjects.Length; i++)
+        {
+            storeLaunchPoint(launchPointObjects[i], i);
+        }
+       
     }
 
 	void Update ()
@@ -78,11 +89,18 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                StartCoroutine(fireProjectile(projectileLaunchPoints[0]));
+                for (int i = 0; i < numberOfCanonSlots; i++)
+                {
+                    StartCoroutine(fireProjectile(projectileLaunchPoints[0, i]));
+                }
+                
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                StartCoroutine(fireProjectile(projectileLaunchPoints[1]));
+                for (int i = 0; i < numberOfCanonSlots; i++)
+                {
+                    StartCoroutine(fireProjectile(projectileLaunchPoints[1, i]));
+                }
             }
         }
     }
@@ -139,5 +157,13 @@ public class PlayerController : MonoBehaviour
     void isDead()
     {
         GameManager.singleton.endGame(false);
+    }
+
+    void storeLaunchPoint(Transform launchPointObj, int leftRight)
+    {
+        for (int i = 0; i < launchPointObj.childCount; i++)
+        {
+            projectileLaunchPoints[leftRight, i] = launchPointObj.GetChild(i);
+        }
     }
 }
