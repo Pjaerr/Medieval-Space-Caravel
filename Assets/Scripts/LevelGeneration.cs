@@ -16,17 +16,55 @@ public class LevelGeneration : MonoBehaviour
 
     [SerializeField] private Transform[] spawnPoints = new Transform[5];
 
+    public void generateNewLevel()
+   {
+        generateBoundaries();
+        generateWaterTiles();
+        generateLandMass();
+        setSpawnPoints();
+   }
 
     void Start()
     {
-        randomlyGenerateBoundaries();
-        setMinMax();
-        loadWaterTiles();
-        setSpawnPoints();
-        
+        generateNewLevel();
     }   
 
-    void loadWaterTiles()
+    void setMinMax(float[] positions)
+    {
+        for (int i = 0; i < minMaxX.Length; i++)
+        {
+            minMaxX[i] = positions[i];
+            minMaxY[i] = positions[i + 2];
+        }
+    }
+
+    void generateBoundaries()
+    {
+        //Position and scale left boundary
+        levelBoundaries[0].position = new Vector3(Random.Range(-10, 80), 0, 10);
+        Vector2 leftBoundPos = levelBoundaries[0].position;
+        levelBoundaries[0].localScale = new Vector3(1, Random.Range(90, 30), 0);
+        Vector2 leftBoundScale = levelBoundaries[0].localScale;
+
+        //Position and scale of top boundary.
+        levelBoundaries[1].localScale = new Vector3(Random.Range(80, 200), 1, 0);
+        Vector2 topBoundScale = levelBoundaries[1].localScale;
+        levelBoundaries[1].position = new Vector3(leftBoundPos.x + (topBoundScale.x / 2), leftBoundScale.y / 2, 10);
+        Vector2 topBoundPos = levelBoundaries[1].position;
+
+
+        //Position and scale of right boundary
+        levelBoundaries[2].position = new Vector3(topBoundScale.x + leftBoundPos.x, 0, 10);
+        levelBoundaries[2].localScale = leftBoundScale;
+
+        //Position and scale of bottom boundary
+        levelBoundaries[3].position = new Vector3(topBoundPos.x, -(leftBoundScale.y / 2), 10);
+        levelBoundaries[3].localScale = topBoundScale;
+
+        setMinMax(new float[] {leftBoundPos.x, levelBoundaries[2].position.x, topBoundPos.y, levelBoundaries[3].position.y});
+    }
+
+     void generateWaterTiles()
     {
         /*Instantiate water tile at minMaxX[0] and instantiate another one at minMaxX[0] + 1.6f iterativley
         and increase a counter each time by 1.6f, when said counter reaches to more than or equal to the value of
@@ -42,39 +80,16 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
-
-    void setMinMax()
+    void generateLandMass()
     {
-        minMaxX[0] = levelBoundaries[0].position.x;
-        minMaxX[1] = levelBoundaries[2].position.x;
-        minMaxY[0] = levelBoundaries[1].position.y;
-        minMaxY[1] = levelBoundaries[3].position.y;
-    }
 
-    void randomlyGenerateBoundaries()
-    {
-        //Position and scale left boundary
-        levelBoundaries[0].position = new Vector3(Random.Range(-10, 80), 0, 10);
-        levelBoundaries[0].localScale = new Vector3(1, Random.Range(90, 30), 0);
-
-        //Position and scale of top boundary.
-        levelBoundaries[1].localScale = new Vector3(Random.Range(80, 200), 1, 0);
-        levelBoundaries[1].position = new Vector3(levelBoundaries[0].position.x + (levelBoundaries[1].localScale.x / 2), levelBoundaries[0].localScale.y / 2, 10);
-
-        //Position and scale of right boundary
-        levelBoundaries[2].position = new Vector3(levelBoundaries[1].localScale.x + levelBoundaries[0].position.x, 0, 10);
-        levelBoundaries[2].localScale = levelBoundaries[0].localScale;
-
-        //Position and scale of bottom boundary
-        levelBoundaries[3].position = new Vector3(levelBoundaries[1].position.x, -(levelBoundaries[0].localScale.y / 2), 10);
-        levelBoundaries[3].localScale = levelBoundaries[1].localScale;
     }
 
     void setSpawnPoints()
     {
         for (int i = 0; i < spawnPoints.Length; i++)
         {
-            spawnPoints[i].position = new Vector3(Random.Range(levelBoundaries[0].position.x, levelBoundaries[2].position.x),Random.Range(levelBoundaries[1].position.y, levelBoundaries[3].position.y), 10);
+            spawnPoints[i].position = new Vector3(Random.Range(minMaxX[0], minMaxX[1]),Random.Range(minMaxY[0], minMaxY[1]), 10);
         }
     }
 }
