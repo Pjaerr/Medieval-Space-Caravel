@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
 	[HideInInspector] public int numberOfEnemies = 2;
 	[SerializeField] private GameObject enemyPrefab;
 
-	[SerializeField] private Transform[] spawnPoints;
+	[SerializeField] private Transform playerSpawnPoint;
+	public Transform[] spawnPoints;
 	[HideInInspector] public int wave = 1;
 
 	public static GameManager singleton = null;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
 		gUI = GetComponent<UI>();
 		minMaxX = levelGen.minMaxX;
 		minMaxY = levelGen.minMaxY;
+		setSpawnPoints();
 		spawnEnemies(numberOfEnemies);
 	}
 
@@ -87,6 +89,15 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(3);
 		spawnEnemies(numberOfEnemies);
 	}
+
+
+	void setSpawnPoints()
+		{
+			for (int i = 0; i < spawnPoints.Length; i++)
+			{
+				spawnPoints[i].position = new Vector3(Random.Range(minMaxX[0], minMaxX[1]),Random.Range(minMaxY[0], minMaxY[1]), 10);
+			}
+		}
 
 	/*Spawns enemies randomly between minmaxX and Y positions respectivley.*/
 	void spawnEnemies(int numberOfEnemies)

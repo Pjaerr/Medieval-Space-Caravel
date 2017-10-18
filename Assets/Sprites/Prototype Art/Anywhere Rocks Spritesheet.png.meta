@@ -1,10 +1,15 @@
 fileFormatVersion: 2
-guid: 18f00a62b0bc8e94e9b41dbe5d9623cd
-timeCreated: 1507130047
+guid: 639fe6065ee07b840b8fca4bf04a641e
+timeCreated: 1507972737
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: rock_face_1_0
+    21300000: Anywhere Rocks Spritesheet_0
+    21300002: Anywhere Rocks Spritesheet_1
+    21300004: Anywhere Rocks Spritesheet_2
+    21300006: Anywhere Rocks Spritesheet_3
+    21300008: Anywhere Rocks Spritesheet_4
+    21300010: Anywhere Rocks Spritesheet_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -100,13 +105,83 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rock_face_1_0
+      name: Anywhere Rocks Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 0
-        width: 30
-        height: 32
+        x: 6
+        y: 59
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Anywhere Rocks Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 53
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Anywhere Rocks Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 37
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Anywhere Rocks Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 32
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Anywhere Rocks Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 7
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Anywhere Rocks Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 10
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

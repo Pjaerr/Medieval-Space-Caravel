@@ -303,8 +303,10 @@ MonoBehaviour:
   launchPointObjects:
   - {fileID: 0}
   - {fileID: 0}
+  numberOfCanonSlots: 1
   movementSpeed: 5
   rotationSpeed: 2
+  lives: 5
   damage: 2
   cooldownTime: 1
 --- !u!114 &114465021492761236
