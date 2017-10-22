@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
+    List<Level> levels = new List<Level>();
     //Objects to be instantiated.
     public GameObject waterTile;
     public GameObject[] landMass; //Array containing references to prefabs of rocks, islands etc.
@@ -187,4 +188,10 @@ public struct AABB
         this.width = width;
         this.height = height;
     }
+}
+
+public struct LandMass
+{
+    public GameObject prefab;
+    public Vector3 position;
 }
